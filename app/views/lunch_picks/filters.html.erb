@@ -1,0 +1,29 @@
+<h1>Almost there..</h1>
+
+<%= form_for post_filters_path do |f| %>
+  <%= f.label :address, class: 'address' %><br>
+  <%= f.text_field :address, class: 'address' %>
+  <p class="address">or</p>
+  <button type="button" id="location">Get Current Location</button><br>
+  Enter a search query<br>
+  <%= f.text_field :search %><br>
+  <%= f.submit "Submit" %>
+<% end %>
+
+<script>
+  $('#location').click(function() {
+    $('.address').remove();
+  // loading true
+  navigator.geolocation.getCurrentPosition(function(position) {
+  // loading false
+    alert('location received!');
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    console.log(position)
+
+
+  // do_something(position.coords.latitude, position.coords.longitude);
+  });
+});
+
+</script>

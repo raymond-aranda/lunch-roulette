@@ -1,1 +1,13 @@
-<h1>Welcome!</h1>
+<div class="container border p-5">
+  <p class="invitation"><%= invitation %></p>
+  <% @accepted_all.each do |row| %>
+    <% if row.accepted == false && @accepted_all.last.accepted == false %>
+      <%= link_to 'Accept', accept_path(row), method: :put %>
+      | <%= link_to 'Decline', decline_path(row), method: :delete, data: { confirm: 'Are You Sure?' } %>
+      <% break %>
+    <% end %>
+  <% end %>
+  <h1>Welcome to Lunch Roulette</h1>
+  <%= link_to 'Your Lunch Groups', groups_users_path %><br>
+  <%= link_to 'Create a Lunch Group', new_group_path %>
+</div>

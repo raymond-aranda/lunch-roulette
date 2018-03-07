@@ -1,0 +1,20 @@
+<div class="container border p-5">
+  <h1>Lunch Groups</h1>
+
+  <ul>
+    <% @groups.each do |group| %>
+      <% admin = group.groups_users.first.user %>
+      <li><strong>Admin:</strong> <%= admin.name %><br>
+        <strong>Group Name:</strong> <%= group.name %>
+        <%= link_to 'Show', group %>
+        <% if admin == current_user %>
+          <%= link_to 'Edit', edit_group_path(group) %>
+          <%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are You Sure' } %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+
+  <%= link_to 'Home', '/' %><br>
+  <%= link_to 'Create a Lunch Group', new_group_path %>
+</div>

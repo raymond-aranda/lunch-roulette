@@ -1,0 +1,39 @@
+<%= link_to "Back to #{@group.name}", @group %><br>
+<%= link_to 'Back to Groups', groups_users_path %>
+
+<h1 class="text-center mb-5">Lunch Picks</h1>
+
+<div class="container">
+  <div class="row text-center border">
+  <% @yelp_data['businesses'].each do |business| %>
+    <div class="col-md-4 border py-5">
+      <h3><%= business['name'] %></h3>
+      <%= business['location']['address1'] %><br>
+      <p><%= business['location']['city'] %>,
+        <%= business['location']['state'] %>,
+        <%= business['location']['zip_code'] %></p>
+      <p>Yelp Rating: <%= business['rating'] %><br>
+         Price: <%= business['price'] %><br>
+         Category: <%= business['categories'][0]['title'] %>
+      </p>
+      <div style="background-image:url('<%= business['image_url'] %>');" class="picks"></div>
+
+      <%= form_for [@group,@lunch_pick] do |f| %>
+        <%= f.hidden_field :restaurant, :value => business['name'] %>
+        <%= link_to 'Map', 'google', :target => "_blank", class: 'btn btn-secondary' %>
+        <%= f.submit "Vote", class: "btn btn-info" %>
+        <%= link_to 'Yelp', business['url'], :target => "_blank", class: 'btn btn-primary' %>
+      <% end %>
+
+    </div>
+  <% end %>
+  </div>
+</div>
+<br>
+
+<script>
+navigator.geolocation.getCurrentPosition(function(position) {
+  console.log(position)
+  // do_something(position.coords.latitude, position.coords.longitude);
+});
+</script>

@@ -1,0 +1,8 @@
+<h1>Create a Lunch Group</h1>
+
+<%= form_for @group do |f| %>
+  Group Name: <%= f.text_field :name %>
+  <%= f.submit "Create" %>
+<% end %>
+
+<%= link_to 'Back to Groups', groups_users_path %>

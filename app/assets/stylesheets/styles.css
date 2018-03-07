@@ -1,0 +1,29 @@
+body {
+  margin-bottom:100px;
+}
+a {
+  color: #2D55A6;
+}
+.picks {
+  display: block;
+  width: 200px;
+  height: 200px;
+  background-position: 50% 50%;
+  background-repeat:   no-repeat;
+  background-size:     cover;
+  margin: 0 auto;
+}
+
+.col-md-4 .btn {
+  margin: 20px 0;
+}
+
+.col-md-4 .btn-primary {
+  border: 1px solid #8C7A70;
+  background: #8C7A70;
+}
+
+#wheel {
+  display: none;
+  width:600px;
+}

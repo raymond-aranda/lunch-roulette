@@ -1,0 +1,81 @@
+<h1 class="text-center"><%= @group.name %></h1>
+<div class="container border p-5">
+  <div class="row">
+    <div class="col-sm">
+      <h3>Lunch Crew:</h3>
+      <ul>
+        <% lunch_picks_array = [] %>
+        <% @groups_users.each do |groups_user| %>
+          <% if groups_user.accepted == true %>
+            <li class="choices">
+              <% user = User.find(groups_user.user_id) %>
+              <%= user.name %>
+              <% lunch_pick = user.lunch_picks.where(group_id: @group.id) %>
+              <% if current_user.lunch_picks.where(group_id: @group.id).empty? && lunch_pick.empty? %>
+                <%= link_to 'Pick Lunch', group_lunch_picks_path(@group) %>
+              <% elsif lunch_pick.exists? %>
+                <% lunch_picks_array << lunch_pick.last.restaurant %>
+                <%= "chose #{lunch_pick.last.restaurant}" %>
+                <% if current_user.id == groups_user.user_id  %>
+                  <%= link_to 'Remove Choice', group_lunch_pick_path(@group), method: :delete, data: { confirm: 'Are You Sure?' } %>
+                <% end %>
+              <% end %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+      <!-- filters_path(@group) -->
+      <!-- group_lunch_picks_path(@group) -->
+<!-- from http://www.switchonthecode.com/tutorials/creating-a-roulette-wheel-using-html5-canvas -->
+      <div class="da da-center" id="wheel">
+        <input type="button" value="spin" onclick="spin();" class="btn btn-primary">
+        <canvas id="wheelcanvas" width="500" height="500"></canvas>
+
+        <script data=<%=@restaraunts%>>
+          var restaraunts = <%= lunch_picks_array.to_json.html_safe %>;
+
+          var startAngle = 0;
+          var arc = 2 * Math.PI / restaraunts.length ;
+          var spinTimeout = null;
+
+          var spinArcStart = 10;
+          var spinTime = 0;
+          var spinTimeTotal = 0;
+
+          var ctx;
+        </script>
+
+        <script src="roulette_wheel.js"></script>
+        <script>draw();</script>
+      </div>
+
+      <%= form_for invite_path, method: :post do |f| %>
+        <h3>Invite By Email</h3>
+        <%= f.text_field params[:email], placeholder: "type friends email" %>
+        <%= f.submit 'Invite' %>
+      <% end %>
+    </div>
+
+    <div class="col-sm">
+      <% if @groups_users.where(accepted: false).any? %>
+        <h3>Pending Invitations</h3>
+      <% end %>
+      <% @groups_users.each do |groups_user| %>
+        <% if groups_user.accepted == false %>
+          <p>Name: <%= groups_user.user.name %><br>
+          Email: <%= groups_user.user.email %></p>
+        <% end %>
+      <% end %>
+
+      <%= link_to 'Back to Groups', groups_users_path %>
+    </div>
+  </div>
+</div>
+
+<script>
+  var choices = document.getElementsByClassName("choices");
+    if (choices[0].innerHTML.includes('chose')) {
+      var wheel = document.getElementById('wheel');
+      wheel.style.display = 'block';
+    }
+</script>
