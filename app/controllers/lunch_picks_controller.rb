@@ -17,7 +17,7 @@ class LunchPicksController < ApplicationController
   end
 
   def find_yelp_data
-    headers = { 'Authorization' => "Bearer #{Rails.application.secrets.yelp_api_key}" }
+    headers = { 'Authorization' => "Bearer #{Rails.application.secrets.YELP_API_KEY}" }
 
     url = 'https://api.yelp.com/v3/businesses/search?term=lunch&latitude=41.8804874&longitude=-87.6324572'
 
