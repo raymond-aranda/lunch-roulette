@@ -1,7 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.action_mailer.default_url_options = { host: 'https://app.mailgun.com/app/domains/sandbox18de7726c70e497eb061a4350f3b00b8.mailgun.org'}
+  config.action_mailer.default_url_options = { host: 'cp-lunch-roulette.herokuapp.com'}
 
   # Code is not reloaded between requests.
   config.cache_classes = true

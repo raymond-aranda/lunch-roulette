@@ -1,10 +1,25 @@
+<div class="text-center alert alert-success" id="location-found">
+  <a href="#" data-dismiss="alert" class="close">×</a>
+  <ul style="list-style-type: none;">
+    <li>
+      Location Found!
+    </li>
+  </ul>
+</div>
 <div class="container border p-5 mt-5" style="width:500px;">
   <h1 class="mb-3">Almost there..</h1>
-
   <%= form_for post_filters_path do |f| %>
     <div class="form-group">
-      <button type="button" id="location" class="btn btn-sm btn-info" name="location">Get Current Location</button> <span class="address">or</span>
-      <button type="button" class="address btn btn-sm btn-info">Enter an Address</button>
+      <button type="button" id="location" class="btn btn-sm btn-info" name="location">Get Current Location
+      <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+      </button>
+      <button type="button" class="address-btn btn btn-sm btn-info">Enter an Address</button>
     </div>
     <div class="form-group">
       <%= f.hidden_field :longitude, class: 'longitude' %>
@@ -81,7 +96,7 @@
       <%= f.text_field :zip, class: 'form-control' %>
     </div>
     <div class="form-group">
-      <%= f.label :enter_a_search_query%><br>
+      <%= f.label :what_are_you_craving? %><br>
       <%= f.text_field :search, placeholder: 'lunch', class: 'form-control' %>
     </div>
     <%= f.submit "Find Lunch", class: 'btn btn-primary' %>
@@ -89,18 +104,22 @@
 </div>
 <script>
   $('#location').click(function() {
-    $('.address').remove();
-    // loading true
-  navigator.geolocation.getCurrentPosition(function(position) {
-    // loading false
-    alert('location received!');
+    $('.address-btn').hide();
+    $('.spinner').show();
+    navigator.geolocation.getCurrentPosition(function(position) {
+    $('.spinner').hide();
+    $('#location-found').show();
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-
     $('.latitude').val(latitude)
     $('.longitude').val(longitude)
     // do_something(position.coords.latitude, position.coords.longitude);
   });
+});
+
+  $('.address-btn').click(function() {
+    $('#location').hide();
+    $('.address').show();
 });
 
 </script>

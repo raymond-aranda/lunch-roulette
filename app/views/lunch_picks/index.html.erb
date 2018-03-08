@@ -16,24 +16,16 @@
          Price: <%= business['price'] %><br>
          Category: <%= business['categories'][0]['title'] %>
       </p>
-      <div style="background-image:url('<%= business['image_url'] %>');" class="picks"></div>
-
+      <a data-fancybox="gallery" href="<%= business['image_url'] %>">
+        <div style="background-image:url('<%= business['image_url'] %>');" class="picks"></div>
+      </a>
       <%= form_for [@group,@lunch_pick] do |f| %>
         <%= f.hidden_field :restaurant, :value => business['name'] %>
-        <%= link_to 'Map', 'google', :target => "_blank", class: 'btn btn-secondary' %>
+        <a data-fancybox href="https://www.google.com/maps/search/?api=1&query=<%= business['location']['address1']+' '+business['location']['city']+' '+business['location']['state']+' '+business['location']['zip_code']%>" class="btn btn-secondary">Map</a>
         <%= f.submit "Vote", class: "btn btn-info" %>
         <%= link_to 'Yelp', business['url'], :target => "_blank", class: 'btn btn-primary' %>
       <% end %>
-
     </div>
   <% end %>
   </div>
 </div>
-<br>
-
-<script>
-navigator.geolocation.getCurrentPosition(function(position) {
-  console.log(position)
-  // do_something(position.coords.latitude, position.coords.longitude);
-});
-</script>
