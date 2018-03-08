@@ -1,9 +1,9 @@
-<div class="container border p-5">
-  <p class="invitation"><%= invitation %></p>
+<div class="container border p-5 mt-5">
   <% @accepted_all.each do |row| %>
     <% if row.accepted == false && @accepted_all.last.accepted == false %>
-      <%= link_to 'Accept', accept_path(row), method: :put %>
-      | <%= link_to 'Decline', decline_path(row), method: :delete, data: { confirm: 'Are You Sure?' } %>
+      <%= row.group.name %>
+      <%= link_to 'Accept', accept_path(row), method: :put, class: 'btn btn-primary' %>
+      <%= link_to 'Decline', decline_path(row), method: :delete, data: { confirm: 'Are You Sure?' }, class: 'btn btn-danger' %>
       <% break %>
     <% end %>
   <% end %>

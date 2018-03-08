@@ -1,27 +1,20 @@
-<h1 class="text-center"><%= @group.name %></h1>
+<h1 class="text-center mt-5"><%= @group.name %></h1>
 <div class="container border p-5">
   <div class="row">
     <div class="col-sm">
       <h3>Lunch Crew:</h3>
-      <ul>
-        <% lunch_picks_array = [] %>
-        <% @groups_users.each do |groups_user| %>
-          <% if groups_user.accepted == true %>
-            <li class="choices">
-              <% user = User.find(groups_user.user_id) %>
-              <%= user.name %>
-              <% lunch_pick = user.lunch_picks.where(group_id: @group.id) %>
-              <% if current_user.lunch_picks.where(group_id: @group.id).empty? && lunch_pick.empty? %>
-                <%= link_to 'Pick Lunch', group_lunch_picks_path(@group) %>
-              <% elsif lunch_pick.exists? %>
-                <% lunch_picks_array << lunch_pick.last.restaurant %>
-                <%= "chose #{lunch_pick.last.restaurant}" %>
-                <% if current_user.id == groups_user.user_id  %>
-                  <%= link_to 'Remove Choice', group_lunch_pick_path(@group), method: :delete, data: { confirm: 'Are You Sure?' } %>
-                <% end %>
-              <% end %>
-            </li>
-          <% end %>
+      <% lunch_picks_array = [] %>
+      <ul id="choices">
+        <% @user_names.each_with_index do |user_name, index| %>
+          <li>
+            <%= user_name if @user_acceptances[index] %>
+            <%= link_to 'Pick Lunch', filters_path(@group) if @pick_lunch_statuses[index] %>
+              <% @lunch_picks[index] && lunch_picks_array << @lunch_picks[index].restaurant %>
+            <% if @lunch_picks[index] %>
+              <%= "chose #{@lunch_picks[index].restaurant}" %>
+              <%= link_to 'Remove Choice', group_lunch_pick_path(@group), method: :delete, data: { confirm: 'Are You Sure?' } if current_user.name == user_name %>
+            <% end %>
+          </li>
         <% end %>
       </ul>
       <!-- filters_path(@group) -->
@@ -31,7 +24,7 @@
         <input type="button" value="spin" onclick="spin();" class="btn btn-primary">
         <canvas id="wheelcanvas" width="500" height="500"></canvas>
 
-        <script data=<%=@restaraunts%>>
+        <script>
           var restaraunts = <%= lunch_picks_array.to_json.html_safe %>;
 
           var startAngle = 0;
@@ -67,15 +60,16 @@
         <% end %>
       <% end %>
 
+      <%= link_to 'Leave Group', decline_path, method: :delete, data: { confirm: 'Are You Sure?' }, class: 'btn btn-danger' %>
       <%= link_to 'Back to Groups', groups_users_path %>
     </div>
   </div>
 </div>
 
 <script>
-  var choices = document.getElementsByClassName("choices");
-    if (choices[0].innerHTML.includes('chose')) {
-      var wheel = document.getElementById('wheel');
-      wheel.style.display = 'block';
-    }
+  var choices = document.getElementById("choices");
+  if (choices.innerHTML.includes('chose')) {
+    var wheel = document.getElementById('wheel');
+    wheel.style.display = 'none';
+  }
 </script>

@@ -1,8 +1,13 @@
-<h1>Create a Lunch Group</h1>
+<div class="container border p-5 mt-5" style="width:500px;">
+  <h1>Create a Lunch Group</h1>
 
-<%= form_for @group do |f| %>
-  Group Name: <%= f.text_field :name %>
-  <%= f.submit "Create" %>
-<% end %>
+  <%= form_for @group do |f| %>
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control mb-2' %>
+      <%= f.submit "Create", class: 'btn btn-primary float-left mr-2' %>
+      <%= link_to 'Back to Groups', groups_users_path, class: 'btn btn-info' %>
+    </div>
+  <% end %>
 
-<%= link_to 'Back to Groups', groups_users_path %>
+</div>

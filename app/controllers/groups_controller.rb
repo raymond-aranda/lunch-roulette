@@ -1,27 +1,35 @@
 class GroupsController < ApplicationController
   before_action :find_group, only: [:show, :edit, :update, :destroy, :invite]
-  before_action :find_accepted_row, only: [:delete_my_group, :update_my_group]
+  before_action :find_accepted_true, :find_accepted_false, only: [:delete_my_group, :update_my_group]
   before_action :find_accepted_all, only: [:update_my_group]
+
+  def accepted?
+    @accepted_true.accepted
+  end
 
   def my_groups
     @groups = current_user.groups
   end
 
   def update_my_group
-    @accepted_row.accepted = true
-    @accepted_row.save
-    @accepted_true = current_user.groups_users.where(accepted: true).last
-
-    if @accepted_all.count == 0
-      redirect_to @accepted_true.group
+    @accepted_false.accepted = true
+    if @accepted_false.save
+      redirect_to @accepted_false.group
     else
       redirect_to '/'
     end
   end
 
   def delete_my_group
-    @accepted_row.destroy
-    redirect_to '/'
+    if @accepted_true && accepted?
+      @accepted_true.destroy
+      lunch_pick = current_user.lunch_picks.find_by(group_id: params[:id])
+      lunch_pick.destroy
+      redirect_to '/'
+    else
+      @accepted_false.destroy
+      redirect_to '/'
+    end
   end
 
   def new
@@ -41,11 +49,22 @@ class GroupsController < ApplicationController
 
   def show
     @groups_users = GroupsUser.where(group_id: params[:id])
-    # @restaraunts = []
-    # @lunch_picks = Group.where(id: params[:id]).last.lunch_picks
-    # @lunch_picks.each do |lunch_pick|
-    #   @restaraunts << lunch_pick.restaurant
-    # end
+    @pick_lunch_statuses = []
+    @user_names = []
+    @user_acceptances = []
+    @lunch_picks = []
+
+
+    @groups_users.each do |groups_user|
+      @user_names << groups_user.user.name
+      @user_acceptances << groups_user.accepted
+    end
+
+    @groups_users.each do |groups_user|
+      lunch_pick = groups_user.user.lunch_picks.find_by(group_id: @group.id)
+      @lunch_picks << lunch_pick
+      @pick_lunch_statuses << (current_user.lunch_picks.where(group_id: @group.id).empty? && !lunch_pick && current_user == groups_user.user)
+    end
   end
 
   def edit
@@ -83,8 +102,12 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
   end
 
-  def find_accepted_row
-    @accepted_row = current_user.groups_users.where(accepted: false).last
+  def find_accepted_true
+    @accepted_true = current_user.groups_users.where(accepted: true).last
+  end
+
+  def find_accepted_false
+    @accepted_false = current_user.groups_users.where(accepted: false).last
   end
 
   def find_accepted_all
