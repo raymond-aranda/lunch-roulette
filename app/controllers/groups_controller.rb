@@ -24,7 +24,7 @@ class GroupsController < ApplicationController
     if @accepted_true && accepted?
       @accepted_true.destroy
       lunch_pick = current_user.lunch_picks.find_by(group_id: params[:id])
-      lunch_pick.destroy
+      lunch_pick && lunch_pick.destroy
       redirect_to '/'
     else
       @accepted_false.destroy
@@ -83,7 +83,8 @@ class GroupsController < ApplicationController
   end
 
   def invite
-    @email = params["/groups/#{params[:id]}"].first
+      @name = params["/groups/#{params[:id]}"]['name']
+      @email = params["/groups/#{params[:id]}"]['email']
     @user = User.where(email: @email)
 
     if @user.any?
@@ -91,8 +92,11 @@ class GroupsController < ApplicationController
       if @groups_user.save
         redirect_to @group, notice: "You successfully invited #{@user.first.name}"
       end
+    elsif !@user.any?
+      User.invite!(:email => @email, :name => @name)
+      redirect_to @group, notice: "An invitation has been sent to #{@email}"
     else
-      redirect_to @group, notice: 'Email not found.'
+      redirect_to @group, flash[:error] = 'Invite was unsuccessful'
     end
   end
 
