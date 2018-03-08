@@ -24,6 +24,7 @@ gem 'devise_invitable', '~> 1.7.0'
 gem 'httparty'
 gem 'geokit'
 gem 'geokit-rails'
+gem 'mailgunner'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
