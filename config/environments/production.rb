@@ -2,8 +2,6 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Devise Configuration
-  config.action_mailer.default_url_options = { host: 'ec2-54-221-220-59.compute-1.amazonaws.com', port: 5432 }
-
   ActionMailer::Base.smtp_settings = {
   :port           => ENV['MAILGUN_SMTP_PORT'],
   :address        => ENV['MAILGUN_SMTP_SERVER'],

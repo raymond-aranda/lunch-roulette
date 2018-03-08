@@ -87,7 +87,7 @@ class GroupsController < ApplicationController
       @email = params["/groups/#{params[:id]}"]['email']
     @user = User.where(email: @email)
 
-    if @user.any?
+    if @user.any? && !current_user
       @groups_user = GroupsUser.new(group_id: params[:id], user_id: @user.first.id, sender: current_user.name, notice: true)
       if @groups_user.save
         redirect_to @group, notice: "You successfully invited #{@user.first.name}"
@@ -96,7 +96,8 @@ class GroupsController < ApplicationController
       User.invite!(:email => @email, :name => @name)
       redirect_to @group, notice: "An invitation has been sent to #{@email}"
     else
-      redirect_to @group, flash[:error] = 'Invite was unsuccessful'
+      flash[:error] = 'Invite was unsuccessful'
+      redirect_to @group
     end
   end
 
