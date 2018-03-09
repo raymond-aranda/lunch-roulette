@@ -30,6 +30,25 @@
 body {
   margin-bottom:100px;
 }
+
+#header {
+  position: relative;
+  padding-top: 140px;
+  border-radius: 0;
+  background: url('/assets/header.jpg');
+  background-size: cover;
+  background-position: 50%;
+  height:600px;
+}
+
+.header-container {
+  background-color: rgba(240,240,240,0.6);
+  width:500px;
+  padding:40px;
+  border-radius: 10px;
+  margin:auto;
+}
+
 a {
   color: #2D55A6;
 }
@@ -53,16 +72,18 @@ a {
 }
 
 #wheel {
+  position: relative;
   display: none;
   width:600px;
 }
 
-.address {
+.address, #location-found, #lunch-picks {
   display: none;
 }
 
-#location-found {
-  display: none;
+#spin {
+  position: absolute;
+  left:222px;
 }
 
 #location {

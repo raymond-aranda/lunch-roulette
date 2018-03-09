@@ -1,27 +1,53 @@
 <h1 class="text-center mt-5"><%= @group.name %></h1>
-<div class="container border p-5">
+<div class="container p-5">
   <div class="row">
     <div class="col-sm">
-      <h3>Lunch Crew:</h3>
-      <% lunch_picks_array = [] %>
-      <ul id="choices">
+      <h3 class="text-center mb-3">Members</h3>
+      <table class="table table-hover">
+        <thead>
+          <tr class="text-center">
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Actions</th>
+            <th scope="col">Choice</th>
+          </tr>
+        </thead>
+        <tbody id="choices">
+        <% lunch_picks_array = [] %>
         <% @user_names.each_with_index do |user_name, index| %>
-          <li>
-            <%= user_name if @user_acceptances[index] %>
+        <tr class="text-center">
+          <th scope="row"><%= index + 1 %></th>
+          <td>
+            <%= user_name %>
+          </td>
+          <td>
+            <% if !@user_acceptances[index] %>
+              (pending invite)
+            <% end %>
             <%= link_to 'Pick Lunch', filters_path(@group) if @pick_lunch_statuses[index] %>
-              <% @lunch_picks[index] && lunch_picks_array << @lunch_picks[index].restaurant %>
             <% if @lunch_picks[index] %>
-              <%= "chose #{@lunch_picks[index].restaurant}" %>
               <%= link_to 'Remove Choice', group_lunch_pick_path(@group), method: :delete, data: { confirm: 'Are You Sure?' } if current_user.name == user_name %>
             <% end %>
-          </li>
+            <% @lunch_picks[index] && lunch_picks_array << @lunch_picks[index].restaurant %>
+          </td>
+          <td>
+            <% if @lunch_picks[index] %>
+              <%= @lunch_picks[index].restaurant %>
+            <% end %>
+          </td>
+        </tr>
         <% end %>
-      </ul>
-      <!-- filters_path(@group) -->
-      <!-- group_lunch_picks_path(@group) -->
-<!-- from http://www.switchonthecode.com/tutorials/creating-a-roulette-wheel-using-html5-canvas -->
+        </tbody>
+      </table>
+      <div class="text-center mb-3">
+        <%= link_to 'Back to Groups', groups_users_path, class: 'btn btn-info' %>
+        <%= link_to 'Leave Group', decline_path, method: :delete, data: { confirm: 'Are You Sure?' }, class: 'btn btn-danger' %>
+      </div>
+    </div>
+      <div id="lunch-picks"><%= lunch_picks_array %></div>
+    <div class="col-sm text-center">
       <div class="da da-center" id="wheel">
-        <input type="button" value="spin" onclick="spin();" class="btn btn-primary">
+      <input type="button" value="spin" onclick="spin();" class="btn btn-primary" id="spin">
         <canvas id="wheelcanvas" width="500" height="500"></canvas>
 
         <script>
@@ -40,9 +66,16 @@
 
         <script>draw();</script>
       </div>
-
+    </div>
+</div>
+      <!-- filters_path(@group) -->
+      <!-- group_lunch_picks_path(@group) -->
+<!-- from http://www.switchonthecode.com/tutorials/creating-a-roulette-wheel-using-html5-canvas -->
+  <div class="row mt-5">
+    <div class="col-sm">
+      <h3 class="text-center">Invite A Friend</h3>
+      <div class="border p-5 mt-3">
       <%= form_for invite_path, method: :post do |f| %>
-        <h3>Invite A Friend</h3>
         <div class="form-group">
         <%= f.label :name %>
         <%= f.text_field :name, placeholder: 'name', class: 'form-control' %>
@@ -54,29 +87,14 @@
         </div>
         <%= f.submit 'Invite', class: 'btn btn-primary' %>
       <% end %>
-    </div>
-
-    <div class="col-sm">
-      <% if @groups_users.where(accepted: false).any? %>
-        <h3>Pending Invitations</h3>
-      <% end %>
-      <% @groups_users.each do |groups_user| %>
-        <% if groups_user.accepted == false %>
-          <p>Name: <%= groups_user.user.name %><br>
-          Email: <%= groups_user.user.email %></p>
-        <% end %>
-      <% end %>
-
-      <%= link_to 'Leave Group', decline_path, method: :delete, data: { confirm: 'Are You Sure?' }, class: 'btn btn-danger' %>
-      <%= link_to 'Back to Groups', groups_users_path %>
+      </div>
     </div>
   </div>
-</div>
 
 <script>
-  var choices = document.getElementById("choices");
-  if (choices.innerHTML.includes('chose')) {
+  var lunchPicks = document.getElementById("lunch-picks");
+  if (lunchPicks.innerHTML != '[]') {
     var wheel = document.getElementById('wheel');
-    wheel.style.display = 'block';
+    wheel.style.display = 'inline';
   }
 </script>

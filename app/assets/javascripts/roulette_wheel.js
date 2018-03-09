@@ -66,8 +66,7 @@ function spin() {
   // spinTimeTotal = Math.random() * 3 + 4 * 1000;
   spinTimeTotal = 15 * 1000;
   rotateWheel();
-  var snd = new Audio("images/spin.mp3");
-  snd.play();
+  // document.getElementById('spin').remove();
 }
 
 function rotateWheel() {

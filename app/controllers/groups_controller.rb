@@ -54,7 +54,6 @@ class GroupsController < ApplicationController
     @user_acceptances = []
     @lunch_picks = []
 
-
     @groups_users.each do |groups_user|
       @user_names << groups_user.user.name
       @user_acceptances << groups_user.accepted

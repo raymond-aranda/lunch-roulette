@@ -6,7 +6,7 @@
     </li>
   </ul>
 </div>
-<div class="container border p-5 mt-5" style="width:500px;">
+<div class="container border p-5 mt-5 text-center" style="width:500px;">
   <h1 class="mb-3">Almost there..</h1>
   <%= form_for post_filters_path do |f| %>
     <div class="form-group">
@@ -97,9 +97,9 @@
     </div>
     <div class="form-group">
       <%= f.label :what_are_you_craving? %><br>
-      <%= f.text_field :search, placeholder: 'lunch', class: 'form-control' %>
+      <%= f.text_field :search, placeholder: 'lunch', class: 'form-control text-center' %>
     </div>
-    <%= f.submit "Find Lunch", class: 'btn btn-primary' %>
+    <%= f.submit "Find Lunch", class: 'btn btn-primary w-100' %>
   <% end %>
 </div>
 <script>
