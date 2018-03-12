@@ -20,6 +20,14 @@ class LunchPicksController < ApplicationController
   end
 
   def post_filters
+    if @longitude == "" && @latitude == ""
+      if @address == "" || @city == "" || @state == "" || @zip == ""
+        flash[:error] = 'Address fields must be filled out.'
+        redirect_to filters_path
+        return
+      end
+    end
+
     Geokit::Geocoders::GoogleGeocoder.api_key = Rails.application.secrets.GOOGLE_API_KEY
     @converted_address = Geokit::Geocoders::GoogleGeocoder.geocode "#{@address}, #{@city}, #{@state} #{@zip}"
     @latitude = @converted_address.lat if @latitude.empty?
