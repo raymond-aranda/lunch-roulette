@@ -1,14 +1,4 @@
-<div class="jumbotron text-center" id="header">
-  <div class="header-container">
-  <h1 class="display-4">Lunch Roulette</h1>
-  <p class="lead">The deciding factor when it comes to choosing what to eat!</p>
-  <div class="text-center">
-    <%= link_to 'My Groups', groups_users_path, class: 'btn btn-info' %>
-    <%= link_to 'Create A Group', new_group_path, class: 'btn btn-primary' %>
-  </div>
-  </div>
-</div>
-
+<div class="text-center invitation">
   <% @accepted_all.each do |row| %>
     <% if row.accepted == false && @accepted_all.last.accepted == false %>
       <%= row.group.name %>
@@ -17,8 +7,13 @@
       <% break %>
     <% end %>
   <% end %>
-
-
-
-<!-- <a data-fancybox href="https://www.google.com/maps/search/?api=1&query=1200%20Pennsylvania%20Ave%20SE%2C%20Washington%2C%20District%20of%20Columbia%2C%2020003">Google Map</a> -->
-
+</div>
+<div class="jumbotron text-center mb-0" id="header">
+  <div class="header-container">
+    <h1 class="display-4">Lunch Roulette</h1>
+    <p class="lead">The deciding factor when it comes to choosing what your group should eat!</p>
+    <div class="text-center">
+      <%= link_to 'My Groups', groups_users_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>

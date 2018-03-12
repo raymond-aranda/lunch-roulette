@@ -97,7 +97,7 @@
     </div>
     <div class="form-group">
       <%= f.label :what_are_you_craving? %><br>
-      <%= f.text_field :search, placeholder: 'lunch', class: 'form-control text-center' %>
+      <%= f.text_field :search, placeholder: 'lunch', value: 'lunch', class: 'form-control text-center' %>
     </div>
     <%= f.submit "Find Lunch", class: 'btn btn-primary w-100' %>
   <% end %>
@@ -121,5 +121,4 @@
     $('#location').hide();
     $('.address').show();
 });
-
 </script>

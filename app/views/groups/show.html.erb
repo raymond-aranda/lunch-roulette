@@ -1,7 +1,7 @@
 <h1 class="text-center mt-5"><%= @group.name %></h1>
 <div class="container p-5">
   <div class="row">
-    <div class="col-sm">
+    <div class="col-md">
       <h3 class="text-center mb-3">Members</h3>
       <table class="table table-hover">
         <thead>
@@ -44,35 +44,31 @@
         <%= link_to 'Leave Group', decline_path, method: :delete, data: { confirm: 'Are You Sure?' }, class: 'btn btn-danger' %>
       </div>
     </div>
-      <div id="lunch-picks"><%= lunch_picks_array %></div>
-    <div class="col-sm text-center">
+    <div id="lunch-picks"><%= lunch_picks_array %></div>
+    <div class="col-md text-center">
       <div class="da da-center" id="wheel">
-      <input type="button" value="spin" onclick="spin();" class="btn btn-primary" id="spin">
+        <input type="button" value="spin" onclick="spin();" class="btn btn-primary" id="spin">
         <canvas id="wheelcanvas" width="500" height="500"></canvas>
 
         <script>
           var restaraunts = <%= lunch_picks_array.to_json.html_safe %>;
-
           var startAngle = 0;
           var arc = 2 * Math.PI / restaraunts.length ;
           var spinTimeout = null;
-
           var spinArcStart = 10;
           var spinTime = 0;
           var spinTimeTotal = 0;
-
           var ctx;
         </script>
 
         <script>draw();</script>
       </div>
     </div>
+  </div>
 </div>
-      <!-- filters_path(@group) -->
-      <!-- group_lunch_picks_path(@group) -->
-<!-- from http://www.switchonthecode.com/tutorials/creating-a-roulette-wheel-using-html5-canvas -->
-  <div class="row mt-5">
-    <div class="col-sm">
+<div class="container">
+  <div class="row mt-3">
+    <div class="col-md">
       <h3 class="text-center">Invite A Friend</h3>
       <div class="border p-5 mt-3">
       <%= form_for invite_path, method: :post do |f| %>
@@ -90,6 +86,7 @@
       </div>
     </div>
   </div>
+</div>
 
 <script>
   var lunchPicks = document.getElementById("lunch-picks");

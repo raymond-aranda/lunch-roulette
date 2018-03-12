@@ -4,7 +4,6 @@ require 'geokit'
 class LunchPicksController < ApplicationController
   before_action :find_group, except: [:filters, :post_filters]
   before_action :filters_params, only: [:post_filters]
-  # before_action :find_yelp_data, only: [:index]
 
   def filters
     @group = Group.find(params[:id])

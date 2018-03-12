@@ -1,5 +1,7 @@
-<%= link_to "Back to #{@group.name}", @group %><br>
-<%= link_to 'Back to Groups', groups_users_path %>
+<div class="container text-right mt-5 p-0">
+  <%= link_to 'Back to Groups', groups_users_path %>
+  / <%= link_to "Back to #{@group.name}", @group %>
+</div>
 
 <h1 class="text-center mb-5">Lunch Picks</h1>
 
@@ -28,4 +30,9 @@
     </div>
   <% end %>
   </div>
+</div>
+
+<div class="container text-right my-5 p-0">
+  <%= link_to 'Back to Groups', groups_users_path %>
+  / <%= link_to "Back to #{@group.name}", @group %>
 </div>

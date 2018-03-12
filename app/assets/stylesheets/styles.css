@@ -1,51 +1,90 @@
-/*flash*/
-.alert-error {
-    background-color: #f2dede;
-    border-color: #eed3d7;
-    color: #b94a48;
-    text-align: left;
- }
+html  {
+  height:100%;
+}
 
-.alert-alert {
-    background-color: #f2dede;
-    border-color: #eed3d7;
-    color: #b94a48;
-    text-align: left;
- }
-
-.alert-success {
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-    color: #468847;
-    text-align: left;
- }
-
-.alert-notice {
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-    color: #468847;
-    text-align: left;
- }
+h1, h2, h3, h4 {
+  font-family: 'Montserrat', sans-serif;
+}
 
 body {
-  margin-bottom:100px;
+  font-family: 'Raleway', sans-serif;
+}
+
+.invitation {
+  position: absolute;
+  z-index: 1;
+  width:100%;
+  margin-top:0 auto;
+  color:#fff;
+  padding:10px 0;
+}
+
+/*flash*/
+.alert-info {
+  position: relative;
+}
+
+.alert-error {
+  background-color: #f2dede;
+  border-color: #eed3d7;
+  color: #b94a48;
+  text-align: left;
+}
+
+.alert-alert {
+  background-color: #f2dede;
+  border-color: #eed3d7;
+  color: #b94a48;
+  text-align: left;
+}
+
+.alert-success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #468847;
+  text-align: left;
+}
+
+.alert-notice {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #468847;
+  text-align: left;
+}
+
+ .navbar {
+  background-color:#000 !important;
+  opacity: 0.8;
+ }
+
+.login-body {
+  background: url('login_bg.jpg');
+  background-size: cover;
+  background-position:center;
+  height:100vh;
+}
+
+.login-body .container {
+  background: rgba(255,255,255,0.6);
+  max-width: 500px;
+  transform: translateY(30%);
 }
 
 #header {
   position: relative;
-  padding-top: 140px;
-  border-radius: 0;
-  background: url('/assets/header.jpg');
+  padding-top: 190px;
+  background: url('header.jpg');
   background-size: cover;
-  background-position: 50%;
-  height:600px;
+  background-position:center;
+  height:100vh;
+  border-radius: 0;
 }
 
 .header-container {
-  background-color: rgba(240,240,240,0.6);
-  width:500px;
+  background-color: rgba(0,0,0,0.6);
+  color:#fff;
+  max-width:550px;
   padding:40px;
-  border-radius: 10px;
   margin:auto;
 }
 
@@ -71,19 +110,22 @@ a {
   background: #8C7A70;
 }
 
+.col-md-4 .btn-primary:hover {
+  background:#71635b;
+  border: 1px solid #71635b;
+}
+
 #wheel {
   position: relative;
   display: none;
-  width:600px;
+}
+
+#wheelcanvas {
+  width:100%;
 }
 
 .address, #location-found, #lunch-picks {
   display: none;
-}
-
-#spin {
-  position: absolute;
-  left:222px;
 }
 
 #location {
@@ -144,4 +186,10 @@ a {
     transform: scaleY(1.0);
     -webkit-transform: scaleY(1.0);
   }
+}
+
+@media only screen and (max-width: 768px) {
+    #spin {
+      width:265px;
+    }
 }

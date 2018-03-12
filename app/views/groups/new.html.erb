@@ -4,7 +4,7 @@
   <%= form_for @group do |f| %>
     <div class="form-group">
       <%= f.label :name %>
-      <%= f.text_field :name, class: 'form-control mb-2' %>
+      <%= f.text_field :name, class: 'form-control mb-2 text-center' %>
       <%= f.submit "Create", class: 'btn btn-primary w-100 mb-3' %>
       <%= link_to 'Home', '/', class: 'btn btn-secondary' %>
       <%= link_to 'Back to Groups', groups_users_path, class: 'btn btn-info' %>

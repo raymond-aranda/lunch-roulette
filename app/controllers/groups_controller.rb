@@ -82,18 +82,21 @@ class GroupsController < ApplicationController
   end
 
   def invite
-      @name = params["/groups/#{params[:id]}"]['name']
-      @email = params["/groups/#{params[:id]}"]['email']
+    @name = params["/groups/#{params[:id]}"]['name']
+    @email = params["/groups/#{params[:id]}"]['email']
     @user = User.where(email: @email)
 
-    if @user.any? && !current_user
+    if @user.any? && @user.last != current_user
       @groups_user = GroupsUser.new(group_id: params[:id], user_id: @user.first.id, sender: current_user.name, notice: true)
       if @groups_user.save
         redirect_to @group, notice: "You successfully invited #{@user.first.name}"
       end
     elsif !@user.any?
-      User.invite!(:email => @email, :name => @name)
-      redirect_to @group, notice: "An invitation has been sent to #{@email}"
+        User.invite!(:email => @email, :name => @name)
+        @groups_user = GroupsUser.new(group_id: params[:id], user_id: @user.first.id, sender: current_user.name, notice: true)
+      if @groups_user.save
+        redirect_to @group, notice: "An invitation has been sent to #{@email}"
+      end
     else
       flash[:error] = 'Invite was unsuccessful'
       redirect_to @group
