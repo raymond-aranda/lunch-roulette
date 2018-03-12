@@ -37,14 +37,19 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group = Group.new(group_params)
-    @group.save
-    current_user.groups << @group
-    @groups_user = GroupsUser.last
-    @groups_user.accepted = true
-    current_user.save
-    @groups_user.save
-    redirect_to groups_users_path
+    if params[:group][:name] == ""
+      flash[:error] = 'Name must be filled out.'
+      redirect_to new_group_path
+    else
+      @group = Group.new(group_params)
+      @group.save
+      current_user.groups << @group
+      @groups_user = GroupsUser.last
+      @groups_user.accepted = true
+      current_user.save
+      @groups_user.save
+      redirect_to groups_users_path
+    end
   end
 
   def show
@@ -86,20 +91,25 @@ class GroupsController < ApplicationController
     @email = params["/groups/#{params[:id]}"]['email']
     @user = User.where(email: @email)
 
-    if @user.any? && @user.last != current_user
-      @groups_user = GroupsUser.new(group_id: params[:id], user_id: @user.first.id, sender: current_user.name, notice: true)
-      if @groups_user.save
-        redirect_to @group, notice: "You successfully invited #{@user.first.name}"
-      end
-    elsif !@user.any?
-        User.invite!(:email => @email, :name => @name)
-        @groups_user = GroupsUser.new(group_id: params[:id], user_id: @user.first.id, sender: current_user.name, notice: true)
-      if @groups_user.save
-        redirect_to @group, notice: "An invitation has been sent to #{@email}"
-      end
-    else
-      flash[:error] = 'Invite was unsuccessful'
+    if @name == "" || @email == ""
+      flash[:error] = 'All fields must be filled out.'
       redirect_to @group
+    else
+      if @user.any? && @user.last != current_user
+        @groups_user = GroupsUser.new(group_id: params[:id], user_id: @user.first.id, sender: current_user.name, notice: true)
+        if @groups_user.save
+          redirect_to @group, notice: "You successfully invited #{@user.first.name}"
+        end
+      elsif !@user.any?
+          User.invite!(:email => @email, :name => @name)
+          @groups_user = GroupsUser.new(group_id: params[:id], user_id: @user.first.id, sender: current_user.name, notice: true)
+        if @groups_user.save
+          redirect_to @group, notice: "An invitation has been sent to #{@email}"
+        end
+      else
+        flash[:error] = 'Invite was unsuccessful'
+        redirect_to @group
+      end
     end
   end
 

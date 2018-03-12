@@ -6,7 +6,7 @@
     </li>
   </ul>
 </div>
-<div class="container border p-5 mt-5 text-center" style="width:500px;">
+<div class="container border p-5 mt-5 text-center" style="max-width:500px;">
   <h1 class="mb-3">Almost there..</h1>
   <%= form_for post_filters_path do |f| %>
     <div class="form-group">
@@ -113,7 +113,6 @@
     var longitude = position.coords.longitude;
     $('.latitude').val(latitude)
     $('.longitude').val(longitude)
-    // do_something(position.coords.latitude, position.coords.longitude);
   });
 });
 
