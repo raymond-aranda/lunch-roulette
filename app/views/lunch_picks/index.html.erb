@@ -8,7 +8,7 @@
 <div class="container">
   <div class="row text-center border">
   <% @yelp_data['businesses'].each do |business| %>
-    <div class="col-md-4 border py-5">
+    <div class="col-md-4 col-sm-6 border py-5">
       <h3><%= business['name'] %></h3>
       <%= business['location']['address1'] %><br>
       <p><%= business['location']['city'] %>,
