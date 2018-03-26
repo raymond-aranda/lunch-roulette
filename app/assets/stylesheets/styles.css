@@ -124,7 +124,7 @@ a {
   width:100%;
 }
 
-.address, #location-found, #lunch-picks {
+.address, #location-found, #location-not-found, #lunch-picks {
   display: none;
 }
 

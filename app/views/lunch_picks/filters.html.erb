@@ -6,6 +6,14 @@
     </li>
   </ul>
 </div>
+<div class="text-center alert alert-error" id="location-not-found">
+  <a href="#" data-dismiss="alert" class="close">×</a>
+  <ul style="list-style-type: none;">
+    <li>
+      We are having trouble finding your location. Try typing in an address instead.
+    </li>
+  </ul>
+</div>
 <div class="container border p-5 mt-5 text-center" style="max-width:500px;">
   <h1 class="mb-3">Almost there..</h1>
   <%= form_for post_filters_path do |f| %>
@@ -106,14 +114,24 @@
   $('#location').click(function() {
     $('.address-btn').hide();
     $('.spinner').show();
-    navigator.geolocation.getCurrentPosition(function(position) {
-    $('.spinner').hide();
-    $('#location-found').show();
-    var latitude = position.coords.latitude;
-    var longitude = position.coords.longitude;
-    $('.latitude').val(latitude)
-    $('.longitude').val(longitude)
-  });
+
+    function success(position) {
+      $('.spinner').hide();
+      $('#location-found').show();
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+      $('.latitude').val(latitude)
+      $('.longitude').val(longitude)
+    }
+
+    function fail() {
+      $('.spinner').hide();
+      $('#location-not-found').show();
+      $('#location').hide();
+      $('.address').show();
+    }
+
+    navigator.geolocation.getCurrentPosition((position) => {success(position)}, (error) => {fail(error)}, {timeout:10000});
 });
 
   $('.address-btn').click(function() {
