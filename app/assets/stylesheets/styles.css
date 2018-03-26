@@ -193,3 +193,9 @@ a {
       width:265px;
     }
 }
+
+@media only screen and (max-width: 383px) {
+    #location {
+      margin-bottom:10px;
+    }
+}

@@ -116,6 +116,7 @@
     $('.spinner').show();
 
     function success(position) {
+      $('#location').hide();
       $('.spinner').hide();
       $('#location-found').show();
       var latitude = position.coords.latitude;
