@@ -196,11 +196,19 @@ a {
     .header-container {
       margin-top: -50px;
     }
+
+    .login-body .container {
+      transform: translateY(20%);
+    }
 }
 
 @media only screen and (max-width: 415px) {
     .header-container {
-      margin-top: -20px;
+      margin-top: -70px;
+    }
+
+    .login-body .container {
+      transform: translateY(10%);
     }
 }
 
